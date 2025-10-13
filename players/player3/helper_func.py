@@ -86,7 +86,8 @@ def binary_search_cut(cake: Cake, xy1: Point, target_area: float, largest_piece:
         else:
             r = mid
 
-    if best_xy2 and best_area_diff < 0.5:
+    # reduce threshold
+    if best_xy2 and best_area_diff < 0.2:
         return (best_xy2, best_area_diff)
 
     return None
@@ -108,12 +109,14 @@ def find_valid_cuts_binary_search(cake: Cake, perim_points: list[Point] | None, 
         split_pieces = cake.cut_piece(largest_piece, xy1, xy2)
         ratios = [cake.get_piece_ratio(piece) for piece in split_pieces]
         ratio_diffs = [abs(ratio - original_ratio) for ratio in ratios]
+        print(ratio_diffs)
 
         # find the worst ratio diff since both pieces should conserve ratio
         ratio_diff = max(ratio_diffs)
 
         valid_cuts.append((xy1, xy2, area_diff, ratio_diff))
 
-    valid_cuts.sort(key=lambda x: (x[2], x[3]))
+    #sort only by ratio since we only return valid areas
+    valid_cuts.sort(key=lambda x: x[3])
 
     return [(xy1, xy2) for xy1, xy2, _, _ in valid_cuts]

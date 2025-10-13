@@ -8,7 +8,7 @@ from .helper_func import find_valid_cuts_binary_search
 class Player3(Player):
     def __init__(self, children: int, cake: Cake, cake_path: str | None) -> None:
         super().__init__(children, cake, cake_path)
-        self.num_samples = 250 
+        self.num_samples = 500 
         self.original_ratio = cake.get_piece_ratio(
             cake.get_pieces()[0]
         )  
